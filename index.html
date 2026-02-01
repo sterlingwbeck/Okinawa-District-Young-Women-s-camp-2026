@@ -7,7 +7,19 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="content" style="display: none;">
+    <!-- Access Code Overlay -->
+    <div id="access-overlay" class="overlay">
+        <div class="modal">
+            <h2>Access Required</h2>
+            <p>Please enter the 4-digit code to view camp information.</p>
+            <input type="password" id="code-input" maxlength="4" placeholder="Enter code" autocomplete="off">
+            <button id="submit-code">Submit</button>
+            <p id="error-msg" class="error"></p>
+        </div>
+    </div>
+
+    <!-- Main Content (hidden until correct code) -->
+    <div id="main-content" style="display: none;">
         <header>
             <h1>Okinawa Young Women's Camp 2026</h1>
             <nav>
@@ -19,23 +31,40 @@
                 </ul>
             </nav>
         </header>
-        <section>
+        <section class="card">
             <h2>Welcome</h2>
             <p>Young Women's Camp is on Yagaji Island, March 25–28, 2026.</p>
-            <p>Drop-off is March 25 at 3:00 PM at the Okinawa District Building. Please do not be late!</p>
-            <p>Pickup is at noon on March 28 at the Okinawa District Building.</p>
+            <p>Drop-off: March 25 at 3:00 PM at the Okinawa District Building. Please do not be late!</p>
+            <p>Pickup: March 28 at noon at the Okinawa District Building.</p>
             <p><strong>Meeting Location:</strong> Okinawa District Building, 7 Chome-11-1 Matsumoto, Okinawa, 904-2151.</p>
         </section>
     </div>
 
     <script>
-        const code = prompt("Enter the 4-digit access code:");
-        if (code === "1820") {
-            document.getElementById("content").style.display = "block";
-        } else {
-            alert("Incorrect code. Access denied.");
-            window.location.href = "about:blank"; // Optional: close tab
+        const overlay = document.getElementById('access-overlay');
+        const mainContent = document.getElementById('main-content');
+        const codeInput = document.getElementById('code-input');
+        const submitBtn = document.getElementById('submit-code');
+        const errorMsg = document.getElementById('error-msg');
+
+        function checkCode() {
+            if (codeInput.value === '1820') {
+                overlay.style.display = 'none';
+                mainContent.style.display = 'block';
+            } else {
+                errorMsg.textContent = 'Incorrect code. Please try again.';
+                codeInput.value = '';
+                codeInput.focus();
+            }
         }
+
+        submitBtn.addEventListener('click', checkCode);
+        codeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkCode();
+        });
+
+        // Auto-focus input on load
+        codeInput.focus();
     </script>
 </body>
 </html>
