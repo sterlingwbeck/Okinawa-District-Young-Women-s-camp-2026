@@ -4,18 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Okinawa Young Women's Camp 2026</title>
-    <!-- GLightbox CSS (for lightbox with swipe and download) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
-    <!-- JSZip for ZIP downloads (no backend needed) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- FileSaver for saving ZIP files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
         :root {
-            --forest-green: #4B6B3C;     /* Sleek forest/sage green */
-            --dark-green: #2E3D1F;       /* Deeper hover shade */
-            --tan: #C19A6B;              /* Warm tan accent */
-            --light-tan: #F5F0E6;        /* Light background */
+            --forest-green: #4B6B3C;
+            --dark-green: #2E3D1F;
+            --tan: #C19A6B;
+            --light-tan: #F5F0E6;
             --white: #FFFFFF;
             --text: #1A1A1A;
             --gray: #5A5A5A;
@@ -152,53 +146,6 @@
 
         .error { color: #B33A3A; margin-top: 1rem; min-height: 1.5rem; }
 
-        /* Gallery specific styling */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            text-align: center;
-        }
-
-        .gallery-item img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            border: 1px solid var(--tan);
-            box-shadow: 0 2px 6px var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item img:hover {
-            transform: scale(1.05);
-        }
-
-        .gallery-item input[type="checkbox"] {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-        }
-
-        #download-selected {
-            margin-top: 1.5rem;
-            background-color: var(--forest-green);
-            color: var(--white);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #download-selected:hover {
-            background-color: var(--dark-green);
-        }
-
         /* Responsive */
         @media (max-width: 720px) {
             body { font-size: 1rem; }
@@ -206,7 +153,6 @@
             h2 { font-size: 1.8rem; }
             .content-section { padding: 2rem; margin: 2rem 1.2rem; }
             nav ul { flex-direction: column; gap: 1rem; }
-            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
         }
     </style>
 </head>
@@ -287,14 +233,26 @@
         <!-- Gallery Section -->
         <section id="gallery" class="content-section">
             <h2>Photos and Videos from Camp</h2>
-            <p>Images and videos will be added here during and after the camp.</p>
-            <div id="gallery-grid" class="gallery-grid"></div>
-            <button id="download-selected">Download Selected</button>
+            <p>View the official album below. New photos added to the Google Photos album will appear automatically.</p>
+            
+            <!-- PublicAlbum Embed Widget -->
+            <div style="max-width: 100%; margin: 2rem auto;">
+                <script src="https://cdn.jsdelivr.net/npm/publicalbum@latest/embed-ui.min.js" async></script>
+                <div class="pa-carousel-widget" style="width:100%; height:480px; display:none;"
+                  data-link="https://photos.app.goo.gl/q6frZMR4iPALjjMS9"
+                  data-title="Okinawa District Young Women's Camp 2026 · Sunday, Feb 1 📸"
+                  data-description="Shared album · Tap to view!">
+                    <object data="https://lh3.googleusercontent.com/pw/AP1GczOOKmfxb74KeKdMc0rtVOe2iXlrD0zx9NtwBWXZeF_gHJkRaxL5f2O3gHeiM5dBwN4DxcJDpVJfH946N9EtwPabVVpB2bec7mBiRR_FhAwo-0uHJMid=w1920-h1080"></object>
+                    <object data="https://lh3.googleusercontent.com/pw/AP1GczM2Gol-1Lh1EAMjYe_dqSed7_0pw-H73B5jdPMkW5peKncuFki4sskjvmvuKfIIAZX1ewlhihVNYaa6ymPAQcrDoxTtflHQZWrG9D4L82ZENkd3dJfg=w1920-h1080"></object>
+                </div>
+            </div>
+            
+            <p style="text-align: center; font-style: italic; color: #5A5A5A; margin-top: 1.5rem;">
+                Tap or click the carousel to browse full-screen. Long-press images on mobile or right-click on desktop to save/share.
+            </p>
         </section>
     </div>
 
-    <!-- GLightbox JS -->
-    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
     <script>
         // Access Code Logic
         const overlay = document.getElementById('access-overlay');
@@ -334,108 +292,8 @@
 
                 this.classList.add('active');
                 document.getElementById(targetId).classList.add('active');
-
-                // If gallery tab, ensure gallery is populated
-                if (targetId === 'gallery') loadGallery();
             });
         });
-
-        // Gallery Logic
-        let galleryLoaded = false;
-        function loadGallery() {
-            if (galleryLoaded) return;
-            galleryLoaded = true;
-
-            // Array of image filenames (add all filenames here after uploading to 'images/' folder)
-            const images = [
-                '2026 Youth Theme logo.jpeg', // Example - add more like 'photo1.jpg', 'photo2.jpg', etc.
-                // Add dozens/hundreds here as needed, one per line: 'filename.ext',
-            ];
-
-            const galleryGrid = document.getElementById('gallery-grid');
-            galleryGrid.innerHTML = ''; // Clear if needed
-
-            images.forEach((filename, index) => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = filename;
-                item.appendChild(checkbox);
-
-                const a = document.createElement('a');
-                a.href = `images/${filename}`; // Assumes images/ folder; change if root
-                a.className = 'glightbox';
-                a.setAttribute('data-glightbox', `title: Photo ${index + 1}`);
-
-                const img = document.createElement('img');
-                img.src = a.href;
-                img.alt = `Camp photo ${index + 1}`;
-
-                a.appendChild(img);
-                item.appendChild(a);
-                galleryGrid.appendChild(item);
-            });
-
-            // Initialize GLightbox for swipe, download, etc.
-            GLightbox({
-                selector: '.glightbox',
-                touchNavigation: true, // Swipe support
-                download: true // Download button in lightbox
-            });
-
-            // Multiple Download Logic
-            const downloadBtn = document.getElementById('download-selected');
-            downloadBtn.addEventListener('click', () => {
-                const selected = Array.from(galleryGrid.querySelectorAll('input[type="checkbox"]:checked'))
-                    .map(checkbox => checkbox.value);
-
-                if (selected.length === 0) {
-                    alert('Please select at least one image.');
-                    return;
-                }
-
-                if (selected.length === 1) {
-                    // Single download - browser native
-                    const link = document.createElement('a');
-                    link.href = `images/${selected[0]}`;
-                    link.download = selected[0];
-                    link.click();
-                } else {
-                    // Multiple - ZIP and download
-                    const zip = new JSZip();
-                    const promises = selected.map(filename => 
-                        fetch(`images/${filename}`)
-                            .then(res => res.blob())
-                            .then(blob => zip.file(filename, blob))
-                    );
-
-                    Promise.all(promises).then(() => {
-                        zip.generateAsync({type: 'blob'}).then(content => {
-                            saveAs(content, 'camp-photos.zip');
-                        });
-                    });
-                }
-            });
-
-            // Browser Share API (for mobile sharing if supported)
-            if (navigator.share) {
-                galleryGrid.querySelectorAll('.gallery-item').forEach(item => {
-                    const shareBtn = document.createElement('button');
-                    shareBtn.textContent = 'Share';
-                    shareBtn.style.marginTop = '0.5rem';
-                    shareBtn.addEventListener('click', () => {
-                        const filename = item.querySelector('input').value;
-                        navigator.share({
-                            title: 'Camp Photo',
-                            url: `images/${filename}`
-                        }).catch(console.error);
-                    });
-                    item.appendChild(shareBtn);
-                });
-            }
-        }
     </script>
 </body>
 </html>
