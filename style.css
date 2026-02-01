@@ -1,116 +1,172 @@
+:root {
+    --forest-green: #4B6B3C;     /* Muted forest/sage green */
+    --dark-green: #3A4928;       /* Deeper variant for hover */
+    --tan: #D2B48C;              /* Warm tan accent */
+    --light-tan: #EDE4D9;        /* Very light tan for backgrounds/hover */
+    --white: #FFFFFF;
+    --text: #1A1A1A;
+    --gray: #4A4A4A;
+}
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #000000;
-    background-color: #FFFFFF;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text);
+    background-color: var(--white);
     margin: 0;
-    padding: 20px;
+    padding: 0;
     line-height: 1.6;
-    font-size: 16px;
+    font-size: 1.05rem;
 }
 
 h1, h2 {
-    color: #556B2F; /* Forest/Sage Green */
-    margin-top: 0;
+    color: var(--forest-green);
+    margin: 0.8em 0 0.4em;
 }
 
 h1 {
-    font-size: 2.2em;
+    font-size: 2.4rem;
     text-align: center;
-    margin-bottom: 10px;
+    padding: 1rem 0;
 }
 
 h2 {
-    font-size: 1.8em;
-    border-bottom: 2px solid #D2B48C; /* Tan accent underline */
-    padding-bottom: 8px;
-    margin-bottom: 20px;
+    font-size: 1.9rem;
+    border-bottom: 2px solid var(--tan);
+    padding-bottom: 0.5rem;
 }
 
 a {
-    color: #556B2F;
+    color: var(--forest-green);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
+    transition: color 0.2s ease;
 }
 
 a:hover {
-    color: #3E4F22; /* Darker green on hover */
-    text-decoration: underline;
+    color: var(--dark-green);
 }
 
-nav {
+header {
+    background-color: var(--light-tan);
+    padding: 1rem;
     text-align: center;
-    margin: 20px 0;
+    border-bottom: 1px solid var(--tan);
 }
 
 nav ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 1rem 0 0;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 25px;
+    gap: 1.2rem;
 }
 
 nav ul li a {
-    padding: 8px 16px;
-    border: 1px solid #D2B48C;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
+    padding: 0.6rem 1.4rem;
+    background-color: var(--white);
+    border: 1px solid var(--tan);
+    border-radius: 2rem;
+    transition: all 0.25s ease;
 }
 
 nav ul li a:hover {
-    background-color: #F5F0E6; /* Very light tan hover */
+    background-color: var(--tan);
+    color: var(--white);
 }
 
-section {
-    max-width: 800px;
-    margin: 0 auto 40px;
-    padding: 20px;
-    border: 1px solid #D2B48C;
+.card {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--white);
+    border: 1px solid var(--tan);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+section.card ul {
+    padding-left: 1.5rem;
+}
+
+/* Overlay / Modal */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(75, 107, 60, 0.85); /* Semi-transparent forest green */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: var(--white);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal h2 {
+    margin-bottom: 1rem;
+}
+
+.modal p {
+    margin-bottom: 1.5rem;
+    color: var(--gray);
+}
+
+#code-input {
+    width: 100%;
+    max-width: 180px;
+    padding: 0.8rem;
+    font-size: 1.4rem;
+    text-align: center;
+    letter-spacing: 0.5rem;
+    border: 2px solid var(--tan);
     border-radius: 8px;
-    background-color: #FFFFFF;
+    margin-bottom: 1.2rem;
 }
 
-ul {
-    padding-left: 20px;
+#submit-code {
+    background-color: var(--forest-green);
+    color: var(--white);
+    border: none;
+    padding: 0.9rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
+#submit-code:hover {
+    background-color: var(--dark-green);
+}
+
+.error {
+    color: #A94442;
+    margin-top: 0.8rem;
+    min-height: 1.2rem;
+}
+
+/* Gallery image/video styling */
 img, video {
     max-width: 100%;
     height: auto;
-    display: block;
-    margin: 15px auto;
-    border: 1px solid #D2B48C;
-    border-radius: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--tan);
+    margin: 1rem 0;
 }
 
-/* Responsiveness */
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
-        font-size: 15px;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    nav ul li a {
-        display: block;
-        text-align: center;
-    }
-
-    h1 {
-        font-size: 1.8em;
-    }
-
-    h2 {
-        font-size: 1.6em;
-    }
-
-    section {
-        padding: 15px;
-    }
+/* Responsive */
+@media (max-width: 640px) {
+    body { font-size: 1rem; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.7rem; }
+    .card { padding: 1.5rem; margin: 1.5rem 1rem; }
+    nav ul { flex-direction: column; gap: 0.8rem; }
 }
