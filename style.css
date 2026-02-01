@@ -1,45 +1,116 @@
 body {
-    font-family: Arial, sans-serif;
-    color: black;
-    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+    background-color: #FFFFFF;
     margin: 0;
     padding: 20px;
     line-height: 1.6;
+    font-size: 16px;
 }
 
 h1, h2 {
-    color: #556B2F; /* Forest green */
+    color: #556B2F; /* Forest/Sage Green */
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 2.2em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.8em;
+    border-bottom: 2px solid #D2B48C; /* Tan accent underline */
+    padding-bottom: 8px;
+    margin-bottom: 20px;
 }
 
 a {
     color: #556B2F;
     text-decoration: none;
+    font-weight: bold;
 }
 
 a:hover {
+    color: #3E4F22; /* Darker green on hover */
     text-decoration: underline;
+}
+
+nav {
+    text-align: center;
+    margin: 20px 0;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: flex;
-    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
 }
 
-header {
-    border-bottom: 1px solid #D2B48C; /* Tan accent */
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+nav ul li a {
+    padding: 8px 16px;
+    border: 1px solid #D2B48C;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+nav ul li a:hover {
+    background-color: #F5F0E6; /* Very light tan hover */
+}
+
+section {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding: 20px;
+    border: 1px solid #D2B48C;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 15px auto;
+    border: 1px solid #D2B48C;
+    border-radius: 4px;
 }
 
 /* Responsiveness */
 @media (max-width: 600px) {
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
     body {
         padding: 10px;
+        font-size: 15px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    nav ul li a {
+        display: block;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.6em;
+    }
+
+    section {
+        padding: 15px;
     }
 }
